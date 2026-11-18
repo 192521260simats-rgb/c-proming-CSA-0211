@@ -1,0 +1,783 @@
+NAME: K.DARTHI 
+REG NO : 192521260  
+
+
+
+
+
+
+
+
+1) #include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+// Structure for date
+struct Date {
+int day;
+int month;
+int year;
+};
+
+// Structure for blood pressure
+struct BloodPressure {
+int systolic;
+int diastolic;
+};
+
+// Main patient structure
+struct Patient {
+char name[50];
+int age;
+char phone[15];
+struct BloodPressure bp;
+struct Date visitDate;
+};
+
+// Function to add patient using structure pointer
+void addPatient(struct Patient *p) {
+
+printf("\nEnter patient name: ");
+scanf(" %49[^\n]", p->name);
+
+printf("Enter age: ");
+scanf("%d", &p->age);
+
+printf("Enter phone number: ");
+scanf("%14s", p->phone);
+
+printf("Enter systolic BP: ");
+scanf("%d", &p->bp.systolic);
+
+printf("Enter diastolic BP: ");
+scanf("%d", &p->bp.diastolic);
+
+printf("Enter visit day: ");
+scanf("%d", &p->visitDate.day);
+
+printf("Enter visit month: ");
+scanf("%d", &p->visitDate.month);
+
+printf("Enter visit year: ");
+scanf("%d", &p->visitDate.year);
+
+printf("\nPatient added successfully!\n");
+}
+
+// Function to display patients
+void displayPatients(struct Patient p[], int count) {
+
+printf("\n----- PATIENT DETAILS -----\n");
+
+for (int i = 0; i < count; i++) {
+
+printf("\nName: %s", p[i].name);
+printf("\nAge: %d", p[i].age);
+printf("\nPhone: %s", p[i].phone);
+
+printf("\nBlood Pressure: %d/%d",
+p[i].bp.systolic,
+p[i].bp.diastolic);
+
+printf("\nVisit Date: %02d/%02d/%04d\n",
+p[i].visitDate.day,
+p[i].visitDate.month,
+p[i].visitDate.year);
+}
+}
+
+// Function to sort patients by age
+void sortPatients(struct Patient p[], int count) {
+
+struct Patient temp;
+
+for (int i = 0; i < count - 1; i++) {
+for (int j = 0; j < count - i - 1; j++) {
+
+if (p[j].age > p[j + 1].age) {
+
+temp = p[j];
+p[j] = p[j + 1];
+p[j + 1] = temp;
+}
+}
+}
+
+printf("\nPatients sorted by age successfully!\n");
+}
+
+int main() {
+
+struct Patient patients[MAX];
+int count, choice;
+
+printf("===== HEALTH CENTRE PATIENT REGISTER =====\n");
+
+printf("Enter number of patients: ");
+scanf("%d", &count);
+
+if (count < 1 || count > MAX) {
+printf("Invalid number of patients!\n");
+return 1;
+}
+
+// Add patient details
+for (int i = 0; i < count; i++) {
+
+printf("\nEnter details of patient %d\n", i + 1);
+
+addPatient(&patients[i]);
+}
+
+do {
+
+printf("\n===== MENU =====\n");
+printf("1. Display Patients\n");
+printf("2. Sort Patients by Age\n");
+printf("3. Exit\n");
+
+printf("Enter your choice: ");
+scanf("%d", &choice);
+
+switch (choice) {
+
+case 1:
+displayPatients(patients, count);
+break;
+
+case 2:
+sortPatients(patients, count);
+displayPatients(patients, count);
+break;
+
+case 3:
+printf("Exiting program...\n");
+break;
+
+default:
+printf("Invalid choice!\n");
+}
+
+} while (choice != 3);
+
+return 0;
+}
+
+
+
+OUTPUT )
+===== HEALTH CENTRE PATIENT REGISTER =====
+Enter number of patients: 2
+
+Enter details of patient 1
+
+Enter patient name: ARUL KUMAR
+Enter age: 45
+Enter phone number: 9876543210
+Enter systolic BP: 120
+Enter diastolic BP: 80
+Enter visit day: 10
+Enter visit month: 11
+Enter visit year: 2026
+
+Patient added successfully!
+
+Enter details of patient 2
+
+Enter patient name: RAVI
+Enter age: 25
+Enter phone number: 9876543211
+Enter systolic BP: 110
+Enter diastolic BP: 17
+Enter visit day: 20
+Enter visit month: 11
+Enter visit year: 2026
+
+Patient added successfully!
+
+===== MENU =====
+1. Display Patients
+2. Sort Patients by Age
+3. Exit
+Enter your choice: 2
+
+Patients sorted by age successfully!
+
+----- PATIENT DETAILS -----
+
+Name: RAVI
+Age: 25
+Phone: 9876543211
+Blood Pressure: 110/17
+Visit Date: 20/11/2026
+
+Name: ARUL KUMAR
+Age: 45
+Phone: 9876543210
+Blood Pressure: 120/80
+Visit Date: 10/11/2026
+
+===== MENU =====
+1. Display Patients
+2. Sort Patients by Age
+3. Exit
+Enter your choice: 2
+
+Patients sorted by age successfully!
+
+----- PATIENT DETAILS -----
+
+Name: RAVI
+Age: 25
+Phone: 9876543211
+Blood Pressure: 110/17
+Visit Date: 20/11/2026
+
+Name: ARUL KUMAR
+Age: 45
+Phone: 9876543210
+Blood Pressure: 120/80
+Visit Date: 10/11/2026
+
+===== MENU =====
+1. Display Patients
+2. Sort Patients by Age
+3. Exit
+Enter your choice: 3
+Exiting program...
+
+
+
+2)
+
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+// Structure for date
+struct Date {
+int day, month, year;
+};
+
+// Structure for address
+struct Address {
+char city[30];
+int pincode;
+};
+
+// Structure for sender and receiver
+struct Person {
+char name[30];
+struct Address address;
+};
+
+// Main parcel structure
+struct Parcel {
+int id;
+float weight;
+struct Date booking;
+struct Person sender;
+struct Person receiver;
+char service[15];
+float charge;
+};
+
+// Function to display parcel using pointer
+void printParcel(struct Parcel *p) {
+
+printf("\nParcel ID: %d", p->id);
+printf("\nWeight: %.1f kg", p->weight);
+
+printf("\nSender: %s", p->sender.name);
+printf("\nSender City: %s", p->sender.address.city);
+printf("\nSender PIN: %d", p->sender.address.pincode);
+
+printf("\nReceiver: %s", p->receiver.name);
+printf("\nReceiver City: %s", p->receiver.address.city);
+printf("\nReceiver PIN: %d", p->receiver.address.pincode);
+
+printf("\nBooking Date: %02d/%02d/%04d",
+p->booking.day,
+p->booking.month,
+p->booking.year);
+
+printf("\nService: %s", p->service);
+printf("\nCharge: Rs. %.2f\n", p->charge);
+}
+
+// Function to sort parcels by weight
+void sortByWeight(struct Parcel p[], int n) {
+
+struct Parcel temp;
+int swaps = 0;
+int bytes = 0;
+
+for (int i = 0; i < n - 1; i++) {
+
+for (int j = 0; j < n - i - 1; j++) {
+
+if (p[j].weight > p[j + 1].weight) {
+
+temp = p[j];
+p[j] = p[j + 1];
+p[j + 1] = temp;
+
+swaps++;
+bytes += 3 * sizeof(struct Parcel);
+}
+}
+}
+
+printf("\nParcels sorted by weight!\n");
+printf("Total swaps: %d\n", swaps);
+printf("Bytes copied: %d\n", bytes);
+}
+
+// Function to search parcels by receiver city
+void searchCity(struct Parcel p[], int n) {
+
+char city[30];
+int found = 0;
+
+printf("\nEnter receiver city: ");
+scanf("%29s", city);
+
+printf("\n--- PARCELS IN %s ---\n", city);
+
+for (int i = 0; i < n; i++) {
+
+if (strcmp(p[i].receiver.address.city, city) == 0) {
+
+printParcel(&p[i]);
+found = 1;
+}
+}
+
+if (found == 0) {
+printf("No parcels found in this city.\n");
+}
+}
+
+int main() {
+
+struct Parcel list[MAX];
+int n, choice;
+
+printf("===== COURIER PARCEL TRACKING =====\n");
+
+printf("Enter number of parcels: ");
+scanf("%d", &n);
+
+if (n < 1 || n > MAX) {
+printf("Invalid number of parcels!\n");
+return 1;
+}
+
+// Get parcel details
+for (int i = 0; i < n; i++) {
+
+printf("\nEnter details of parcel %d\n", i + 1);
+
+printf("Enter parcel ID: ");
+scanf("%d", &list[i].id);
+
+printf("Enter weight: ");
+scanf("%f", &list[i].weight);
+
+printf("Enter booking day: ");
+scanf("%d", &list[i].booking.day);
+
+printf("Enter booking month: ");
+scanf("%d", &list[i].booking.month);
+
+printf("Enter booking year: ");
+scanf("%d", &list[i].booking.year);
+
+printf("Enter sender name: ");
+scanf("%29s", list[i].sender.name);
+
+printf("Enter sender city: ");
+scanf("%29s", list[i].sender.address.city);
+
+printf("Enter sender PIN: ");
+scanf("%d", &list[i].sender.address.pincode);
+
+printf("Enter receiver name: ");
+scanf("%29s", list[i].receiver.name);
+
+printf("Enter receiver city: ");
+scanf("%29s", list[i].receiver.address.city);
+
+printf("Enter receiver PIN: ");
+scanf("%d", &list[i].receiver.address.pincode);
+
+printf("Enter service (Normal/Express): ");
+scanf("%14s", list[i].service);
+
+printf("Enter charge: ");
+scanf("%f", &list[i].charge);
+}
+
+do {
+
+printf("\n===== MENU =====\n");
+printf("1. Display All Parcels\n");
+printf("2. Sort Parcels by Weight\n");
+printf("3. Search by Receiver City\n");
+printf("4. Exit\n");
+
+printf("Enter your choice: ");
+scanf("%d", &choice);
+
+switch (choice) {
+
+case 1:
+for (int i = 0; i < n; i++) {
+printParcel(&list[i]);
+}
+break;
+
+case 2:
+sortByWeight(list, n);
+
+printf("\n--- SORTED PARCELS ---\n");
+
+for (int i = 0; i < n; i++) {
+printParcel(&list[i]);
+}
+break;
+
+case 3:
+searchCity(list, n);
+break;
+
+case 4:
+printf("Exiting program...\n");
+break;
+
+default:
+printf("Invalid choice!\n");
+}
+
+} while (choice != 4);
+
+return 0;
+}  
+
+
+
+
+
+OUTPUT
+Enter your choice: 2
+
+Parcels sorted by weight!
+Total swaps: 2
+
+--- SORTED PARCELS ---
+
+Parcel ID: 502
+Weight: 1.2 kg
+Sender: Kumar
+Sender City: Chennai
+Sender PIN: 600077
+Receiver: Priya
+Receiver City: Chennai
+Receiver PIN: 600078
+Booking Date: 12/10/2026
+Service: Express
+Charge: Rs. 150.00
+
+Parcel ID: 503
+Weight: 2.8 kg
+Sender: Raj
+Sender City: Coimbatore
+Sender PIN: 641001
+Receiver: Anu
+Receiver City: Coimbatore
+Receiver PIN: 641002
+Booking Date: 13/10/2026
+Service: Normal
+Charge: Rs. 80.00
+
+Parcel ID: 501
+Weight: 4.5 kg
+Sender: Arun
+Sender City: Madurai
+Sender PIN: 625001
+Receiver: Ravi
+Receiver City: Madurai
+Receiver PIN: 625002
+Booking Date: 12/10/2026
+Service: Normal
+Charge: Rs. 100.00
+
+
+3)
+#include <stdio.h>
+
+/* Each bit of one byte stores the ON/OFF state of one device. */
+enum { LIGHT = 0, FAN = 1, AC = 2, HEATER = 3, PUMP = 4 };
+
+unsigned char switch_on(unsigned char reg, int dev)
+{
+return reg | (1u << dev);
+}
+
+unsigned char switch_off(unsigned char reg, int dev)
+{
+return reg & ~(1u << dev);
+}
+
+unsigned char toggle(unsigned char reg, int dev)
+{
+return reg ^ (1u << dev);
+}
+
+int is_on(unsigned char reg, int dev)
+{
+return (reg >> dev) & 1u;
+}
+
+/* Counts how many devices are ON */
+int count_on(unsigned char reg)
+{
+int count = 0;
+while (reg) {
+count += reg & 1u;
+reg >>= 1;
+}
+return count;
+}
+
+void show(unsigned char reg)
+{
+for (int bit = 7; bit >= 0; bit--) putchar(((reg >> bit) & 1u) ? '1' : '0');
+putchar('\n');
+}
+
+int main(void)
+{
+unsigned char reg = 0;
+reg = switch_on(reg, LIGHT);
+reg = switch_on(reg, AC);
+show(reg);
+reg = toggle(reg, FAN);
+reg = switch_off(reg, LIGHT);
+show(reg);
+printf("AC is %s, PUMP is %s\n", is_on(reg, AC) ? "ON" : "OFF",
+is_on(reg, PUMP) ? "ON" : "OFF");
+return 0;
+}
+
+
+
+OUTPUT : 00000101
+00000110
+AC is ON, PUMP is OFF
+
+
+
+4) #include <stdio.h>
+
+/* Grade rules: 90-100 S, 80-89 A, 70-79 B, 60-69 C, 50-59 D, below 50 F, invalid '?' */
+char grade(int marks)
+{
+if (marks < 0 || marks > 100) return '?';
+
+switch (marks / 10) {
+case 10:
+case 9: return 'S';
+case 8: return 'A';
+case 7: return 'B';
+case 6: return 'C';
+case 5: return 'D';
+default: return 'F';
+}
+}
+
+int main(void)
+{
+int marks[] = {100, 95, 83, 50, 49, -5};
+for (int i = 0; i < 6; i++) printf("%d:%c ", marks[i], grade(marks[i]));
+printf("\n");
+return 0;
+}
+
+
+
+OUTPUT : 100:S 95:S 83:A 50:D 49:F -5:?
+
+
+
+5) #include <stdio.h>
+
+unsigned long checks = 0; /* number of divisions performed by the last call */
+
+/* Returns 1 if n is prime, otherwise 0. */
+int is_prime(unsigned long n)
+{
+checks = 0;
+if (n < 2) return 0;
+
+for (unsigned long i = 2; i * i <= n; i++) {
+checks++;
+if (n % i == 0) return 0;
+}
+return 1;
+}
+
+int main(void)
+{
+unsigned long tickets[] = {97, 100, 7919, 1000003};
+for (int k = 0; k < 4; k++) {
+int p = is_prime(tickets[k]);
+printf("%8lu %-9s divisions = %lu\n", tickets[k],
+p ? "prime" : "not prime", checks);
+}
+return 0;
+}
+
+
+
+OUTPUT : 97 prime divisions = 8
+100 not prime divisions = 1
+7919 prime divisions = 87
+1000003 prime divisions = 999
+
+
+
+6) #include <stdio.h>
+
+void loanSchedule(double balance, double rate, double emi, int print_table) {
+int month = 0;
+double total_interest = 0.0;
+
+if (emi <= balance * rate) {
+printf("Error: EMI (%.2f) must exceed first month's interest (%.2f).\n",
+emi, balance * rate);
+return;
+}
+
+while (balance > 1e-6) {
+month++;
+if (month > 360) {
+printf("Stopped: Loan exceeds 360-month safety limit (unaffordable EMI).\n");
+return;
+}
+
+double interest = balance * rate;
+total_interest += interest;
+balance += interest;
+
+/* Last month: pay only remaining balance if smaller than fixed EMI */
+double paid = (balance < emi) ? balance : emi;
+balance -= paid;
+
+if (print_table) {
+printf("Month %2d | Interest: %7.2f | Paid: %7.2f | Balance: %8.2f\n",
+month, interest, paid, balance);
+}
+}
+
+printf("EMI: %7.2f -> Months: %3d | Total Interest: %8.2f\n",
+emi, month, total_interest);
+}
+
+int main(void) {
+printf("--- 1. Hand-Verified Schedule (Rs 10,000 @ 2%%, EMI Rs 2,000) ---\n");
+loanSchedule(10000.0, 0.02, 2000.0, 1);
+
+printf("\n--- 2. Growth Investigation (Rs 10,000 @ 2%%, EMI -> Rs 200) ---\n");
+double emis[] = {2000.0, 1000.0, 500.0, 250.0, 205.0, 200.0};
+for (int i = 0; i < 6; i++) {
+loanSchedule(10000.0, 0.02, emis[i], 0);
+}
+
+return 0;
+}
+
+
+
+OUTPUT : 
+1. Hand-Verified Schedule (Rs 10,000 @ 2%, EMI Rs 2,000) ---
+Month 1 | Interest: 200.00 | Paid: 2000.00 | Balance: 8200.00
+Month 2 | Interest: 164.00 | Paid: 2000.00 | Balance: 6364.00
+Month 3 | Interest: 127.28 | Paid: 2000.00 | Balance: 4491.28
+ERROR!
+Month 4 | Interest: 89.83 | Paid: 2000.00 | Balance: 2581.11
+Month 5 | Interest: 51.62 | Paid: 2000.00 | Balance: 632.73
+Month 6 | Interest: 12.65 | Paid: 645.38 | Balance: 0.00
+EMI: 2000.00 -> Months: 6 | Total Interest: 645.38
+
+--- 2. Growth Investigation (Rs 10,000 @ 2%, EMI -> Rs 200) ---
+EMI: 2000.00 -> Months: 6 | Total Interest: 645.38
+EMI: 1000.00 -> Months: 12 | Total Interest: 1270.33
+EMI: 500.00 -> Months: 26 | Total Interest: 2898.73
+EMI: 250.00 -> Months: 82 | Total Interest: 10318.98
+EMI: 205.00 -> Months: 188 | Total Interest: 28444.00
+Error: EMI (200.00) must exceed first month's interest (200.00).
+
+
+
+
+
+7) #include <stdio.h>
+
+unsigned long checks = 0;
+
+/* Original version: tests all divisors 2, 3, 4, ... */
+int is_prime_orig(unsigned long n) {
+checks = 0;
+if (n < 2) return 0;
+for (unsigned long i = 2; i * i <= n; i++) {
+checks++;
+if (n % i == 0) return 0;
+}
+return 1;
+}
+
+/* Redesigned version: checks 2 once, then tests only odd divisors 3, 5, 7, ... */
+int is_prime_fast(unsigned long n) {
+checks = 0;
+if (n < 2) return 0;
+if (n == 2) return 1;
+checks++;
+if (n % 2 == 0) return 0;
+
+for (unsigned long i = 3; i <= n / i; i += 2) {
+checks++;
+if (n % i == 0) return 0;
+}
+return 1;
+}
+
+int main(void) {
+unsigned long tickets[] = {2, 97, 100, 7919, 1000003};
+
+printf("%-10s | %-18s | %-18s\n", "Ticket", "Original (Res/Div)", "Redesigned (Res/Div)");
+printf("-----------------------------------------------------\n");
+for (int k = 0; k < 5; k++) {
+int r1 = is_prime_orig(tickets[k]);
+unsigned long c1 = checks;
+int r2 = is_prime_fast(tickets[k]);
+unsigned long c2 = checks;
+
+printf("%-10lu | %-9s (%3lu) | %-9s (%3lu)\n",
+tickets[k], r1 ? "prime" : "not prime", c1,
+r2 ? "prime" : "not prime", c2);
+}
+return 0;
+}
+
+
+
+0UTPUT : Ticket | Original (Res/Div) | Redesigned (Res/Div)
+-----------------------------------------------------
+2 | prime ( 0) | prime ( 0)
+97 | prime ( 8) | prime ( 5)
+100 | not prime ( 1) | not prime ( 1)
+7919 | prime ( 87) | prime ( 44)
+1000003 | prime (999) | prime (500)
